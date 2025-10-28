@@ -265,6 +265,9 @@ function StreamSmith{
 
                                 # Overwrite the main file (:$DATA)
                                 Set-Content -Path $file.FullName -Value $data -Encoding Byte
+
+                                # Remove the bloat from the file by deleting the ADS
+                                Remove-Item -Path $file.FullName -Stream $ads
                                 
                                 Write-Host "The Byte got ahold of $file"
                                 # so initally I had no sleep condition in here and I was getting smacked harder than a lawn chair in a hurricane, but I thought what if I slowed the process down a bit would the
