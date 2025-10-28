@@ -91,15 +91,25 @@ How the OS behaves (high level)
 
 **Telemetry sources you can use to detect the two-phase ADS pattern (Collect and correlate these,  no single one is sufficient)**
 1.	File-system audit / Security SACLs
+ 
  o	Windows object-access auditing (Audit File System) can produce events when a file or stream is created/modified. In some configurations, the event’s object name will include the stream portion (e.g., `C:\path\file:streamname`), check your platform and audit format. Use SACLs to capture who and which process performed the operation.
+
 2.	EDR / Sysmon / Endpoint telemetry
+ 
  o	Many EDRs and Sysmon-like sensors record file create/write events with process identity, PID, command line, and sometimes the full path. If the sensor captures the full path including the `:stream `suffix on stream writes, you get direct evidence of ADS activity. Even when the stream name is missing, seeing the same process do stream-like reads followed by a main-stream write is a correlation signal.
+
  o	Newer telemetry can capture stream-specific events or stream hashes; if available, those are high-value.
+
 3.	USN Journal / NTFS change journal
+
  o	The USN journal records file change records. It doesn’t always include the stream name in a straightforward way, but it provides a timeline of many file modifications and can be used to trace bulk modifications and correlate them with process events.
+
 4.	ETW / Kernel file I/O providers and ProcMon captures
+ 
  o	Kernel ETW providers, or a ProcMon capture, will show exact `CreateFile`/`ReadFile`/`WriteFile` calls and the full path used by the process (including `:stream` if that path was used). ProcMon-style traces are gold for forensic confirmation.
+
 5.	Stream enumeration during triage
+
  o	If you suspect activity, enumerate ADS on affected files (`Get-Item -Path <file> -Stream *` in PowerShell, or use native APIs) and compute hashes of stream contents. If an ADS exists with an encrypted/high-entropy blob and the primary stream content now differs, that’s strong evidence of a staged stream → overwrite.
 
 **Concrete detection approach (practical)**
