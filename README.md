@@ -1,4 +1,4 @@
-# UnderByte — A Ransomware expirment using Alternate Data Streams  (ADS)
+# UnderByte — A Ransomware experiment  using Alternate Data Streams  (ADS)
 
 **Repository purpose:** this research was to evaluate the feasiabilty of using Alternate Data Stream (ADS) in staging and conducting ransomware-esk behaviors and examines how well common endpoint controls detect or block those behaviors. This repo is explicitly *not* intended to provide operational guidance, tools, or techniques for malicious use.
 
